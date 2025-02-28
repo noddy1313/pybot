@@ -10,11 +10,17 @@ ssl._create_default_https_context = ssl._create_unverified_context
 nltk.data.path.append(os.path.abspath('nltk_data'))
 nltk.download('punkt')
 
+tags = []
+patterns = []
+responses = {}
 intents = [
     {
         'tag':'greeting',
         'patterns':['Hi', 'Hello', 'Hey', 'Whats up', 'How are you'],
-        'responses':['Hi there', 'Hello', 'Hey', 'Nothing much', 'Im fine, thank you']
+        'responses':['Hi there', 'Hello', 'Hey', 'Nothing much', 'Im fine, thank you'],
+         'patterns':['asalam o alaikum'],
+         'responses':['walaikum asalam']
+                                          
     },
     {
         'tag':'goodbye',
@@ -56,4 +62,28 @@ intents = [
         "patterns": ["What is a credit score", "How do I check my credit score", "How can I improve my credit score"],
         "responses": ["A credit score is a number that represents your creditworthiness. It is based on your credit history and is used by lenders to determine whether or not to lend you money. The higher your credit score, the more likely you are to be approved for credit.", "You can check your credit score for free on several websites such as Credit Karma and Credit Sesame."]
     }
-]
+ ]
+for intent in intents:
+    for pattern in intent['patterns']:
+        tags.append(intent['tag'])
+        patterns.append(pattern)
+    responses[intent['tag']] = intent['responses']
+    
+    vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(patterns)
+y = tags
+
+model = LogisticRegression()
+model.fit(X, y)
+
+def chatbot_response(user_input):
+    user_input_vectorized = vectorizer.transform([user_input])
+    tag = model.predict(user_input_vectorized)[0]
+    return random.choice(responses[tag])
+
+st.write("Type a message and get a response!")
+user_input = st.text_input("You:", "")
+
+if user_input:
+    bot_response = chatbot_response(user_input)
+    st.write(f"Chatbot: {bot_response}")
