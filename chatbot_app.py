@@ -133,7 +133,8 @@ def chatbot_response(user_input):
     tag = model.predict(user_input_vectorized)[0]
     return random.choice(responses[tag])
 
-st.write("Hi , I am a Chatbot. How can I help you today?")
+st.title("Ai Chatbot in your service")
+st.write("Hi, I am here to assist you . Feel free to ask me anything!")
 user_input = st.text_input("You:", "")
 
 if user_input:
