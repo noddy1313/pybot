@@ -1,4 +1,4 @@
-# Chatbot Implementation using NLP- README
+# AI Chatbot Implementation using NLP- README
 
 ## Project Overview
 This project implements a simple chatbot using Natural Language Processing (NLP) techniques. The chatbot is designed to recognize user input patterns and respond accordingly using a machine learning model. It is trained on predefined intents and responses using the `TfidfVectorizer` and `LogisticRegression` from the `sklearn` library.
