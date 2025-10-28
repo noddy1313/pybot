@@ -13,8 +13,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 nltk.data.path.append(os.path.abspath("nltk_data"))
 nltk.download('punkt')
 
-file_path = os.path.abspath(r"C:\Users\DELL\OneDrive\Documents\GitHub\pybot\intents.json")
-with open(file_path, "r") as file:
+file_path = os.path.join(os.path.dirname(__file__), "intents.json")
+with open(file_path, "r", encoding="utf-8") as file:
     intents = json.load(file)
 
 vectorizer = TfidfVectorizer()
